@@ -1,0 +1,27 @@
+CraigsLister Program
+
+Author: Christopher Mertin
+Date: July 15, 2015
+
+Released under the GNU public license
+
+This is a simple program I made to find Craigslist listings for apartments or
+rooms that are available in Salt Lake City, Utah. It searches for it based on
+a price range you define and when it finds that price it sends you an email
+to the listing page. It searches the listings every 30 minutes as to not stress
+the servers, give people reasonable time to make a new post, and to give you
+a little break to do other things. If you want to use it, be sure to change
+the parameters in the SendEmail function so that it has your gmail username,
+password, and the email address to send it to. 
+
+If your gmail account is failing to connect, try allowing "less secure apps"
+to access your gmail account 
+(https://www.google.com/settings/security/lesssecureapps) and also there is
+an "unlock captcha fix at (https://accounts.google.com/displayunlockcaptcha).
+On top of this, check your email and see if Google has notified you saying they
+blocked an unknown app from accessing your account. You may have to follow the
+link in that email to verify that it was you.
+
+This should not violate any of Craigslist policies as it is the same as 
+refreshing your web browser on the website. This program simply parses 
+(ie "reads") the site for you once every 30 minutes.
