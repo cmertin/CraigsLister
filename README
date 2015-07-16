@@ -7,12 +7,14 @@ Released under the GNU public license
 
 This is a simple program I made to find Craigslist listings for apartments or
 rooms that are available in Salt Lake City, Utah. It searches for it based on
-a price range you define and when it finds that price it sends you an email
-to the listing page. It searches the listings every 30 minutes as to not stress
-the servers, give people reasonable time to make a new post, and to give you
-a little break to do other things. If you want to use it, be sure to change
-the parameters in the SendEmail function so that it has your gmail username,
-password, and the email address to send it to. 
+a price range you define and then sorts through those, throwing out listings
+which contain terms/phrases that you define in the ignore_list list. Any new
+listings that it finds that is in your price range AND does not contain any
+of the phrases that you have will be emailed to you. It searches the listings 
+every 30 minutes as to not stress the servers, give people reasonable time to 
+make a new post, and to give you a little break to do other things. If you 
+want to use it, be sure to change the parameters in the SendEmail function so 
+that it has your gmail username, password, and the email address to send it to. 
 
 If your gmail account is failing to connect, try allowing "less secure apps"
 to access your gmail account 

@@ -45,7 +45,7 @@ def FindList(myList, search):
         return -1
 
 # Searches and parses the Craigslist site for new listings within your range
-def NewListings(city, rooms, apartments, min_price, max_price):
+def NewListings(city, rooms, apartments, min_price, max_price, ignore_list):
     # Opens and cleans up the webpage for your search
     craigslistURL = urllib2.urlopen("http://" + city + ".craigslist.org/search/hhh?min_Price=" + 'min_price' + "&max_price=" + 'max_price').read()
     craigslist_HTML = StringIO.StringIO(craigslistURL)
@@ -63,14 +63,35 @@ def NewListings(city, rooms, apartments, min_price, max_price):
         if FutureIndex(listings, i, looking_for[0]):
             if FindList(apartments, listings[i:i+20]) == -1:
                 url = "http://" + city + ".craigslist.org" + listings[i:i+20]
-                SendEmail(url, city)
+                if SecondParser(url, ignore_list) == False:
+                    SendEmail(url, city)
                 apartments.append(listings[i:i+20])
         # Check to see if listed rooms for rent
         elif FutureIndex(listings, i, looking_for[1]):
             if FindList(rooms, listings[i:i+20]) == -1:
                 url = "http://" + city + ".craigslist.org" + listings[i:i+20]
-                SendEmail(url, city)
+                if SecondParser(url, ignore_list) == False:
+                    SendEmail(url, city)
                 rooms.append(listings[i:i+20])
+
+# Goes to the listing's page and searches for terms which you don't want to
+# appear in the listing. For example "1br" for 1 bedroom apartments, etc
+def SecondParser(url, ignore_list):
+    listingURL = urllib2.urlopen(url).read()
+    listing_HTML = StringIO.StringIO(listingURL)
+    listing_HTML = listing_HTML.readlines()
+    
+    for i in xrange(0, len(listing_HTML)):
+        listing_HTML[i] = listing_HTML[i].strip()
+
+    listing_HTML_lower = [item.lower() for item in listing_HTML]
+    ignore_list_lower = [item.lower() for item in ignore_list]
+
+    for i in xrange(0, len(strings)):
+        if Find(listing_HTML_lower, ignore_list_lower[i]) != -1:
+            return True
+    return False 
+
 
 # Search an array for a substring in the list, return -1 if it's not in there
 def Find(array, string, start=0):
@@ -130,6 +151,7 @@ min_price = 0 # Minimum price of the listings you're looking for
 max_price = 1400 # Maximum price of the listings
 rooms = []
 apartments = []
+ignore_list = ["Murray", "West Valley", "Provo", "LDS Standards", "LDS Standard", "Jordan", "Midvale", "North Salt", "Millcreek", "Holladay", "Taylorsville", "Cottonwood Heights", "Bountiful", "Layton", "Ogden", "Park City", "Sandy", "Draper", "Vernal", "1 br", "1br", "1 bed", "1bed"]
 
 print("Note: If an email fails to send, it will be saved in ", end="")
 print("\"" + logfile + "\"\n      as well as be displayed in the terminal.")
@@ -146,7 +168,7 @@ if os.path.isfile(apts_file):
         for line in myfile:
             apartments.append(line.strip())
 while True: # Want to run continuously
-    NewListings(city, rooms, apartments, min_price, max_price)
+    NewListings(city, rooms, apartments, min_price, max_price, ignore_list)
 
     with open(rooms_file, "w") as myfile:
         for i in xrange(0, len(rooms)):
