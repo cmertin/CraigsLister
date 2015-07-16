@@ -19,7 +19,7 @@ that it has your gmail username, password, and the email address to send it to.
 If your gmail account is failing to connect, try allowing "less secure apps"
 to access your gmail account 
 (https://www.google.com/settings/security/lesssecureapps) and also there is
-an "unlock captcha fix at (https://accounts.google.com/displayunlockcaptcha).
+an "unlock captcha fix" at (https://accounts.google.com/displayunlockcaptcha).
 On top of this, check your email and see if Google has notified you saying they
 blocked an unknown app from accessing your account. You may have to follow the
 link in that email to verify that it was you.
