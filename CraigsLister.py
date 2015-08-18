@@ -91,7 +91,7 @@ def SecondParser(url, ignore_list):
     listing_HTML_lower = [item.lower() for item in listing_HTML]
     ignore_list_lower = [item.lower() for item in ignore_list]
 
-    for i in xrange(0, len(strings)):
+    for i in xrange(0, len(ignore_list_lower)):
         if Find(listing_HTML_lower, ignore_list_lower[i]) != -1:
             return True
     return False 
